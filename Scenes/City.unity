@@ -3136,8 +3136,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1119049945}
-        m_MethodName: showAdmobVideo
+      - m_Target: {fileID: 1119049947}
+        m_MethodName: ShowRewardedAd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9663,6 +9663,7 @@ GameObject:
   - component: {fileID: 1119049944}
   - component: {fileID: 1119049945}
   - component: {fileID: 1119049946}
+  - component: {fileID: 1119049947}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: "\uB3C4\uC2DCGM"
@@ -10101,6 +10102,29 @@ MonoBehaviour:
   - {fileID: 1895960064}
   - {fileID: 465057831}
   - {fileID: 1274200147}
+--- !u!114 &1119049947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1119049935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7569b57cb895c445e83cbe9c99178a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundck: 0
+  ad_obj: {fileID: 0}
+  radio_ani: {fileID: 0}
+  adBtn_obj: {fileID: 0}
+  Toast_obj: {fileID: 918926949}
+  radioMove1_spr: {fileID: 0}
+  radioMove2_spr: {fileID: 0}
+  adPop_txt: {fileID: 1411855429}
+  cutTime_btn: {fileID: 0}
+  GM: {fileID: 1119049935}
+  init_i: 0
 --- !u!1 &1121742667
 GameObject:
   m_ObjectHideFlags: 0

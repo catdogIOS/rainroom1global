@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GoogleMobileAds.Api;
+//using GoogleMobileAds.Api;
 using UnityEngine.UI;
 using System;
 
 public class AdmobADS : MonoBehaviour {
     
-    AdRequest request;
+    /*AdRequest request;
 
     //영상
     private RewardedAd rewardedAd;
@@ -16,7 +16,7 @@ public class AdmobADS : MonoBehaviour {
 
     //보상형 전면 광고
     private RewardedInterstitialAd rewardedInterstitialAd;
-
+    */
     int rewardCoin;
     Color color;
     public GameObject Toast_obj, blackimg;
@@ -32,7 +32,7 @@ public class AdmobADS : MonoBehaviour {
 
     // Use this for initialization 앱 ID
     void Start () {
-
+        /*
         MobileAds.Initialize(initStatus => { });
 #if UNITY_ANDROID
         string appId = "ca-app-pub-9179569099191885~6058797220"; //테스트용ca-app-pub-3940256099942544~3347511713
@@ -41,7 +41,7 @@ public class AdmobADS : MonoBehaviour {
 #else
         string appId = "unexpected_platform";
 #endif
-
+        */
 
         if (PlayerPrefs.GetInt("outtimecut", 0) == 4 && PlayerPrefs.GetInt("scene", 0) == 0)
         {
@@ -49,7 +49,7 @@ public class AdmobADS : MonoBehaviour {
         }
         color = new Color(1f, 1f, 1f);
 
-
+        /*
         //보상형광고
 #if UNITY_ANDROID
         adUnitIdvideo = "ca-app-pub-9179569099191885/9339319267"; // 테스트 ca-app-pub-3940256099942544/5224354917
@@ -73,14 +73,15 @@ public class AdmobADS : MonoBehaviour {
         AdRequest request = new AdRequest.Builder().Build();
         // Load the rewarded ad with the request.
         RewardedInterstitialAd.LoadAd("ca-app-pub-9179569099191885/1077685867", request, adLoadCallback);
+        */
 
     }
 
     //terminating with uncaught exception of type Il2CppExceptionWrapper ㅇㅔ러 없앰
     private void OnDisable()
     {
-        rewardedAd.OnUserEarnedReward -= HandleUserEarnedReward;
-        rewardedAd.OnAdClosed -= HandleRewardBasedVideoClosed;
+        //rewardedAd.OnUserEarnedReward -= HandleUserEarnedReward;
+        //rewardedAd.OnAdClosed -= HandleRewardBasedVideoClosed;
     }
 
     
@@ -88,11 +89,11 @@ public class AdmobADS : MonoBehaviour {
     private void RequestRewardedVideo()
     {
         // Create an empty ad request.
-        request = new AdRequest.Builder().Build();
+        //request = new AdRequest.Builder().Build();
         // Load the rewarded video ad with the request.
-        this.rewardedAd.LoadAd(request);
+        //this.rewardedAd.LoadAd(request);
     }
-
+    /*
     //시청보상
     public void HandleUserEarnedReward(object sender, Reward args)
     {
@@ -117,7 +118,7 @@ public class AdmobADS : MonoBehaviour {
         PlayerPrefs.SetInt("talk", 5);
         PlayerPrefs.SetInt("blad", 1);
     }
-
+    */
     //동영상닫음
     private void HandleRewardBasedVideoClosed(object sender, System.EventArgs args)
     {
@@ -126,7 +127,7 @@ public class AdmobADS : MonoBehaviour {
     }
 
     public void showAdmobVideo()
-    {
+    {/*
         if (PlayerPrefs.GetInt("talk", 5) >= 5)
         {
             Toast_obj.SetActive(true);
@@ -145,6 +146,7 @@ public class AdmobADS : MonoBehaviour {
                 adPop_txt.text = "Can't see it yet." + "\n" + "Try later.";
             }
         }
+        */
     }
     
 
@@ -159,7 +161,7 @@ public class AdmobADS : MonoBehaviour {
         MonoBehaviour.print("HandleAdOpened event received");
     }
     */
-
+    /*
         //보상형 전면 광고
     private void adLoadCallback(RewardedInterstitialAd ad, AdFailedToLoadEventArgs arg2)
     {
@@ -204,4 +206,5 @@ public class AdmobADS : MonoBehaviour {
     {
         blackimg.SetActive(false);
     }
+    */
 }
