@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UnityADS : MonoBehaviour
 {
 
-    private string gameId = "4270906";//★ Window > Services 설정 테스트 바꿀것 (test용 1486550) //3657850
+    private string gameId = "4735990";//★ Window > Services 설정 테스트 바꿀것 (test용 1486550) //4735990
     public int soundck;
     public GameObject ad_obj, radio_ani, adBtn_obj;
 
@@ -45,7 +45,7 @@ public class UnityADS : MonoBehaviour
         color = new Color(1f, 1f, 1f);
 
 
-        Advertisement.Initialize(gameId, false); //true 테스트모드 **false로 꼭 변경할 ㄱ**
+        Advertisement.Initialize(gameId, true); //true 테스트모드 **false로 꼭 변경할 ㄱ**
     }
 
     // Update is called once per frame
@@ -61,7 +61,7 @@ public class UnityADS : MonoBehaviour
         else
         {
             Toast_obj.SetActive(true);
-            adPop_txt.text = "아직 볼 수 없다." + "\n" + " 나중에 시도해보자.";
+            adPop_txt.text = "Can't see it yet." + "\n" + "Try later.";
         }
     }
 
@@ -76,7 +76,7 @@ public class UnityADS : MonoBehaviour
         else
         {
             Toast_obj.SetActive(true);
-            adPop_txt.text = "아직 볼 수 없다." + "\n" + " 나중에 시도해보자.";
+            adPop_txt.text = "Can't see it yet." + "\n" + "Try later.";
         }
     }
 
