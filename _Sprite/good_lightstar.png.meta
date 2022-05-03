@@ -1,7 +1,58 @@
 fileFormatVersion: 2
 guid: 7e8773206502c7d4b87c38ba3e04c46f
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -7007808106523618716
+    second: good_lightstar_0
+  - first:
+      213: -8447803148294281938
+    second: good_lightstar_1
+  - first:
+      213: 5256090159451077011
+    second: good_lightstar_2
+  - first:
+      213: -1037524254386572041
+    second: good_lightstar_3
+  - first:
+      213: -3448074957517678691
+    second: good_lightstar_4
+  - first:
+      213: 6036573694450645434
+    second: good_lightstar_5
+  - first:
+      213: -2998910505814532457
+    second: good_lightstar_6
+  - first:
+      213: -6925940819634235397
+    second: good_lightstar_7
+  - first:
+      213: 8251612355476909563
+    second: good_lightstar_8
+  - first:
+      213: -3257753453277767958
+    second: good_lightstar_9
+  - first:
+      213: 7051392874800252288
+    second: good_lightstar_10
+  - first:
+      213: 1702103240589241371
+    second: good_lightstar_11
+  - first:
+      213: -6983285304333201413
+    second: good_lightstar_12
+  - first:
+      213: 3531441252635469018
+    second: good_lightstar_13
+  - first:
+      213: 1828165536186405677
+    second: good_lightstar_14
+  - first:
+      213: -3356238566735485113
+    second: good_lightstar_15
+  - first:
+      213: -6190475538331732374
+    second: good_lightstar_16
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -31,9 +82,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
-    aniso: 1
-    mipBias: 0
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -50,7 +101,7 @@ TextureImporter:
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
+  spriteTessellationDetail: 0
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
@@ -87,7 +138,7 @@ TextureImporter:
     buildTarget: Android
     maxTextureSize: 1024
     resizeAlgorithm: 0
-    textureFormat: 50
+    textureFormat: 47
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -110,7 +161,11 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline: []
+    outline:
+    - - {x: -508, y: -127}
+      - {x: -508, y: 319}
+      - {x: 508, y: 319}
+      - {x: 508, y: -127}
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
