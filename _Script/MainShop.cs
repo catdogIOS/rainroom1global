@@ -54,9 +54,6 @@ public class MainShop : MonoBehaviour
     {
         str_Code = PlayerPrefs.GetString("code", "");
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        PlayerPrefs.SetInt(str_Code + "r", 99999);
-        PlayerPrefs.SetInt(str_Code + "h", 999);
-        PlayerPrefs.SetInt("likelv", 12);
         if (PlayerPrefs.GetInt("lightlv", 0) >= 2)
         {
             switchImg.SetActive(true);
