@@ -79,7 +79,7 @@ public class Parkshop : MonoBehaviour
                 if (item_num == 5)
                 {
                     txt_fst[0].text = "Lv.MAX";
-                    txt_fst[1].text = "SoldOut";
+                    txt_fst[1].text = "Sold Out";
                     txt_fst[2].text = "0";
                     txt_fst[3].text = "0";
                     shop_fst.GetComponent<Button>().interactable = false;
@@ -96,7 +96,7 @@ public class Parkshop : MonoBehaviour
                 if (item_num == 5)
                 {
                     txt_sec[0].text = "Lv.MAX";
-                    txt_sec[1].text = "SoldOut";
+                    txt_sec[1].text = "Sold Out";
                     txt_sec[2].text = "0";
                     txt_sec[3].text = "0";
                     shop_sec.GetComponent<Button>().interactable = false;
@@ -116,7 +116,7 @@ public class Parkshop : MonoBehaviour
                 if (item_num == 5)
                 {
                     txt_fst[0].text = "Lv.MAX";
-                    txt_fst[1].text = "SoldOut";
+                    txt_fst[1].text = "Sold Out";
                     txt_fst[2].text = "0";
                     txt_fst[3].text = "0";
                     shop_fst.GetComponent<Button>().interactable = false;
@@ -132,7 +132,7 @@ public class Parkshop : MonoBehaviour
                 if (item_num == 9)
                 {
                     txt_sec[0].text = "Lv.MAX";
-                    txt_sec[1].text = "SoldOut";
+                    txt_sec[1].text = "Sold Out";
                     txt_sec[2].text = "0";
                     txt_sec[3].text = "0";
                     shop_sec.GetComponent<Button>().interactable = false;
@@ -152,7 +152,7 @@ public class Parkshop : MonoBehaviour
                 if (item_num == 5)
                 {
                     txt_fst[0].text = "Lv.MAX";
-                    txt_fst[1].text = "SoldOut";
+                    txt_fst[1].text = "Sold Out";
                     txt_fst[2].text = "0";
                     txt_fst[3].text = "0";
                     shop_fst.GetComponent<Button>().interactable = false;
@@ -168,7 +168,7 @@ public class Parkshop : MonoBehaviour
                 if (item_num == 9)
                 {
                     txt_sec[0].text = "Lv.MAX";
-                    txt_sec[1].text = "SoldOut";
+                    txt_sec[1].text = "Sold Out";
                     txt_sec[2].text = "0";
                     txt_sec[3].text = "0";
                     shop_sec.GetComponent<Button>().interactable = false;
@@ -189,7 +189,7 @@ public class Parkshop : MonoBehaviour
                 if (item_num == 5)
                 {
                     txt_fst[0].text = "Lv.MAX";
-                    txt_fst[1].text = "SoldOut";
+                    txt_fst[1].text = "Sold Out";
                     txt_fst[2].text = "0";
                     txt_fst[3].text = "0";
                     shop_fst.GetComponent<Button>().interactable = false;
@@ -205,7 +205,7 @@ public class Parkshop : MonoBehaviour
                 if (item_num == 9)
                 {
                     txt_sec[0].text = "Lv.MAX";
-                    txt_sec[1].text = "SoldOut";
+                    txt_sec[1].text = "Sold Out";
                     txt_sec[2].text = "0";
                     txt_sec[3].text = "0";
                     shop_sec.GetComponent<Button>().interactable = false;
@@ -247,7 +247,7 @@ public class Parkshop : MonoBehaviour
                         PlayerPrefs.SetInt(str_Code + "r", have_r);
                         PlayerPrefs.SetInt("clock", item_num);
                         txt_fst[0].text = "Lv.X";
-                        txt_fst[1].text = "SoldOut";
+                        txt_fst[1].text = "Sold Out";
                         txt_fst[2].text = "X";
                         txt_fst[3].text = "X";
                         shop_fst.GetComponent<Button>().interactable = false;
@@ -272,7 +272,7 @@ public class Parkshop : MonoBehaviour
                         PlayerPrefs.SetInt(str_Code + "r", have_r);
                         PlayerPrefs.SetInt("frame", item_num);
                         txt_fst[0].text = "Lv.X";
-                        txt_fst[1].text = "SoldOut";
+                        txt_fst[1].text = "Sold Out";
                         txt_fst[2].text = "X";
                         txt_fst[3].text = "X";
                         shop_fst.GetComponent<Button>().interactable = false;
@@ -297,7 +297,7 @@ public class Parkshop : MonoBehaviour
                         PlayerPrefs.SetInt(str_Code + "r", have_r);
                         PlayerPrefs.SetInt("clock", item_num);
                         txt_fst[0].text = "Lv.X";
-                        txt_fst[1].text = "SoldOut";
+                        txt_fst[1].text = "Sold Out";
                         txt_fst[2].text = "X";
                         txt_fst[3].text = "X";
                         shop_fst.GetComponent<Button>().interactable = false;
@@ -326,7 +326,7 @@ public class Parkshop : MonoBehaviour
                         PlayerPrefs.SetInt(str_Code + "r", have_r);
                         PlayerPrefs.SetInt("clock", item_num);
                         txt_fst[0].text = "Lv.X";
-                        txt_fst[1].text = "SoldOut";
+                        txt_fst[1].text = "Sold Out";
                         txt_fst[2].text = "X";
                         txt_fst[3].text = "X";
                         shop_fst.GetComponent<Button>().interactable = false;
@@ -370,7 +370,7 @@ public class Parkshop : MonoBehaviour
                         PlayerPrefs.SetInt(str_Code + "r", have_r);
                         PlayerPrefs.SetInt("frame", item_num);
                         txt_sec[0].text = "Lv.X";
-                        txt_sec[1].text = "SoldOut";
+                        txt_sec[1].text = "Sold Out";
                         txt_sec[2].text = "X";
                         txt_sec[3].text = "X";
                         shop_sec.GetComponent<Button>().interactable = false;
@@ -395,7 +395,7 @@ public class Parkshop : MonoBehaviour
                         PlayerPrefs.SetInt(str_Code + "r", have_r);
                         PlayerPrefs.SetInt("draw", item_num);
                         txt_sec[0].text = "Lv.X";
-                        txt_sec[1].text = "SoldOut";
+                        txt_sec[1].text = "Sold Out";
                         txt_sec[2].text = "X";
                         txt_sec[3].text = "X";
                         shop_sec.GetComponent<Button>().interactable = false;
@@ -420,7 +420,7 @@ public class Parkshop : MonoBehaviour
                         PlayerPrefs.SetInt(str_Code + "r", have_r);
                         PlayerPrefs.SetInt("draw", item_num);
                         txt_sec[0].text = "Lv.X";
-                        txt_sec[1].text = "SoldOut";
+                        txt_sec[1].text = "Sold Out";
                         txt_sec[2].text = "X";
                         txt_sec[3].text = "X";
                         shop_sec.GetComponent<Button>().interactable = false;
@@ -446,7 +446,7 @@ public class Parkshop : MonoBehaviour
                         PlayerPrefs.SetInt(str_Code + "r", have_r);
                         PlayerPrefs.SetInt("draw", item_num);
                         txt_sec[0].text = "Lv.X";
-                        txt_sec[1].text = "SoldOut";
+                        txt_sec[1].text = "Sold Out";
                         txt_sec[2].text = "X";
                         txt_sec[3].text = "X";
                         shop_sec.GetComponent<Button>().interactable = false;

@@ -577,7 +577,7 @@ public class CityShop : MonoBehaviour
                     //빗물
                     txt_today[ci + 1].text = "x";
                     //이름
-                    txt_today[ci + 2].text = "SoldOut";
+                    txt_today[ci + 2].text = "Sold Out";
                     //레벨
                     txt_today[ci + 3].text = "Lv.Max";
                 }
@@ -604,7 +604,7 @@ public class CityShop : MonoBehaviour
                 //빗물
                 txt_today[i + 1].text = "x";
                 //이름
-                txt_today[i + 2].text = "SoldOut";
+                txt_today[i + 2].text = "Sold Out";
                 //레벨
                 txt_today[i + 3].text = "Lv.Max";
                 PlayerPrefs.SetInt("setoutgoods", num_i);

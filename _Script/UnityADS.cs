@@ -52,17 +52,28 @@ public class UnityADS : MonoBehaviour
 
     public void ShowRewardedAd()
     {
-        init_i = 0;
-        if (Advertisement.IsReady("Rewarded_iOS"))
+        if (PlayerPrefs.GetInt("talk", 5) >= 5)
         {
-            ShowOptions options = new ShowOptions { resultCallback = HandleShowResult };
-            Advertisement.Show("Rewarded_iOS", options);
+            Toast_obj.SetActive(true);
+            adPop_txt.text = "Number of Talk's already the max," + "\n" + "so you can't.";
         }
         else
         {
-            Toast_obj.SetActive(true);
-            adPop_txt.text = "Can't see it yet." + "\n" + "Try later.";
+            init_i = 0;
+            if (Advertisement.IsReady("Rewarded_iOS"))
+            {
+                ShowOptions options = new ShowOptions { resultCallback = HandleShowResult };
+                Advertisement.Show("Rewarded_iOS", options);
+            }
+            else
+            {
+                Toast_obj.SetActive(true);
+                adPop_txt.text = "Can't see it yet." + "\n" + "Try later.";
+            }
         }
+
+
+        
     }
 
     public void ShowRewardedAd2()
@@ -286,6 +297,8 @@ public class UnityADS : MonoBehaviour
             {
                 PlayerPrefs.SetInt("outtimecut", 4);
                 cutTime_btn.interactable = false;
+                Toast_obj.SetActive(true);
+                adPop_txt.text = "Time needed to go out was reduced.";
             }
         }
     }
