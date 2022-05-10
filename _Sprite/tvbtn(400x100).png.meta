@@ -8,6 +8,21 @@ TextureImporter:
   - first:
       213: -2389905720659875673
     second: tvbtn(400x100)_1
+  - first:
+      213: 872703527602984123
+    second: tvbtn(400x100)_0
+  - first:
+      213: 753884790412657798
+    second: tvbtn(400x100)_1
+  - first:
+      213: -1892344919718341315
+    second: tvbtn(400x100)_2
+  - first:
+      213: -687329722364228486
+    second: tvbtn(400x100)_3
+  - first:
+      213: -8080848907569271931
+    second: tvbtn(400x100)_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -121,9 +136,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 100
-        width: 400
-        height: 100
+        y: 256
+        width: 512
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +146,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5c84be13fdfce800800000000000000
-      internalID: 643168067441167455
+      spriteID: bb4910d0c377c1c00800000000000000
+      internalID: 872703527602984123
       vertices: []
       indices: 
       edges: []
@@ -143,8 +158,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 400
-        height: 100
+        width: 512
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a8e469c86955ded0800000000000000
-      internalID: -2389905720659875673
+      spriteID: 684cd1ef836567a00800000000000000
+      internalID: 753884790412657798
       vertices: []
       indices: 
       edges: []

@@ -11,12 +11,19 @@ public class MainTimeHandler : MonoBehaviour {
 	public int talk;
 	public Text talkTime_txt,talkNum;
 	string lastTime;
-
+    //현재재화
     public int coldRain_i, hotRain_i;
 
     //경고
     public GameObject warring_obj;
     public Text warningTxt;
+
+
+    //아이폰
+    bool bPaused = false;
+
+    public GameObject homePop_obj;
+    public Text home_txt;
 
     // Use this for initialization
     void Start () {
@@ -71,7 +78,7 @@ public class MainTimeHandler : MonoBehaviour {
 		System.DateTime lastDateTimem = System.DateTime.Parse(lastTimem);
 		//계산
 		System.TimeSpan compareTimem =  System.DateTime.Now - lastDateTimem;
-		//1분당1씩줍니다
+		//1분당5씩줍니다
 		getRain = (int)compareTimem .TotalMinutes;
         //최초실행
         //if(PlayerPrefs.GetInt("coin",-1)==-1&&getRain>20000){
@@ -163,5 +170,52 @@ public class MainTimeHandler : MonoBehaviour {
 	}
 
 
+    //아이폰 홈버튼 대응
+    void OnApplicationPause(bool pause)
 
+    {
+        if (pause)
+
+        {
+            bPaused = true;
+
+            // todo : 어플리케이션을 내리는 순간에 처리할 행동들 /
+            //저장
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            if (bPaused)
+            {
+                bPaused = false;
+                //todo : 내려놓은 어플리케이션을 다시 올리는 순간에 처리할 행동들
+                //비모아두기
+                collectRain();
+                //돌아왔을 때 인사
+                //welcomeBackOut();
+                homePop_obj.SetActive(true);
+                home_txt.text = "You again. Hi.";
+                StartCoroutine("closeToast");
+            }
+        }
+    }
+
+    //토스트
+    IEnumerator closeToast()
+    {
+        Color colorN;
+        colorN = new Color(255f / 255f, 255f / 255f, 255f / 255f);
+        colorN.a = Mathf.Lerp(0f, 1f, 1f);
+        homePop_obj.GetComponent<Image>().color = colorN;
+        homePop_obj.SetActive(true);
+        yield return new WaitForSeconds(2.5f);
+        for (float i = 1f; i > 0f; i -= 0.02f)
+        {
+            colorN.a = Mathf.Lerp(0f, 1f, i);
+            homePop_obj.GetComponent<Image>().color = colorN;
+            yield return null;
+        }
+        homePop_obj.SetActive(false);
+
+    }
 }
