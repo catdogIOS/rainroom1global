@@ -44,18 +44,18 @@ public class MainTimeHandler : MonoBehaviour {
     void Warring()
     {
         //부정행위방지
-        if (getRain > 36000)
+        if (getRain > 36000)//36000
         {//5일치 이상 모았을때
-            if (getRain > 100000)
+            if (getRain > 100000)//100000
             {//2주일 되었을 때
                 getRain = 0;
-                warningTxt.text = "The water leak out because of neglect." + "\n"+ "It's fixed now.";
+                warningTxt.text = "The water leak out because of " + "\n" + "neglect. It's fixed now.";
                 warring_obj.SetActive(true);
             }
             else
             {
                 getRain = 36000; //물탱크가 꽉 찼다
-                warningTxt.text = "The water tank is stop because of neglect." + "\n"+ "It is working now.";
+                warningTxt.text = "The water tank is stop because of " + "\n" + "neglect. It is working now.";
                 warring_obj.SetActive(true);
             }
         }
