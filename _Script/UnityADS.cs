@@ -45,7 +45,7 @@ public class UnityADS : MonoBehaviour
         color = new Color(1f, 1f, 1f);
 
 
-        Advertisement.Initialize(gameId, true); //true 테스트모드 **false로 꼭 변경할 ㄱ**
+        Advertisement.Initialize(gameId, false); //true 테스트모드 **false로 꼭 변경할 ㄱ**
     }
 
     // Update is called once per frame
