@@ -1,7 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Advertisement.IosSupport;
 
 public class MainShop : MonoBehaviour
 {
@@ -52,6 +53,21 @@ public class MainShop : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+try
+        {
+            if (ATTrackingStatusBinding.GetAuthorizationTrackingStatus() ==
+        ATTrackingStatusBinding.AuthorizationTrackingStatus.NOT_DETERMINED)
+            {
+
+                ATTrackingStatusBinding.RequestAuthorizationTracking();
+
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log(ex);
+        }
+
         str_Code = PlayerPrefs.GetString("code", "");
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
         if (PlayerPrefs.GetInt("lightlv", 0) >= 2)
