@@ -998,18 +998,6 @@ try
     }
     void BookRe()
     {
-        if (level >= 9)
-        {
-            shopBtn_obj[4].GetComponent<Button>().interactable = false;
-            txt_book[0].text = "Lv.MAX";
-            txt_book[1].text = book_name[level];
-            txt_book[2].text = "x";
-            txt_book[3].text = "x";
-            //btn_memoBook.SetActive(true);
-            //btn_colorBook.SetActive(true);
-        }
-        else
-        {
             level = PlayerPrefs.GetInt("booklv", 0);
             level--;
             sum = level * 2;
@@ -1028,6 +1016,16 @@ try
             txt_book[2].text = "" + cost_r;
             //마음
             txt_book[3].text = "" + cost_h;
+        
+        if (level >= 9)
+        {
+            shopBtn_obj[4].GetComponent<Button>().interactable = false;
+            txt_book[0].text = "Lv.MAX";
+            txt_book[1].text = book_name[level];
+            txt_book[2].text = "x";
+            txt_book[3].text = "x";
+            //btn_memoBook.SetActive(true);
+            //btn_colorBook.SetActive(true);
         }
     }
 
