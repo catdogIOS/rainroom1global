@@ -127,7 +127,7 @@ public class MainTime : MonoBehaviour
             PlayerPrefs.SetInt("emergencyCODE", 99);
         }
 
-
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
         //구독확인
         PlayerPrefs.SetInt("gudocgetonce", 1);
