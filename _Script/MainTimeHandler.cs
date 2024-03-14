@@ -74,10 +74,21 @@ public class MainTimeHandler : MonoBehaviour {
 		System.DateTime dateTimenow = System.DateTime.Now;
 		//str로장되어있는과거접속시간을가져옵니다
 		string lastTimem = PlayerPrefs.GetString("lastTime",dateTimenow.ToString());
-		//형변환을해줍니다
-		System.DateTime lastDateTimem = System.DateTime.Parse(lastTimem);
-		//계산
-		System.TimeSpan compareTimem =  System.DateTime.Now - lastDateTimem;
+        //형변환을해줍니다
+        System.DateTime lastDateTimem;
+
+        try
+        {
+            lastDateTimem = System.DateTime.Parse(lastTimem);
+        }
+        catch (System.Exception)
+        {
+            lastTimem = System.DateTime.Now.AddHours(-1).ToString();
+        }
+        lastDateTimem = System.DateTime.Parse(lastTimem);
+
+        //계산
+        System.TimeSpan compareTimem =  System.DateTime.Now - lastDateTimem;
 		//1분당5씩줍니다
 		getRain = (int)compareTimem .TotalMinutes;
         //최초실행
@@ -113,9 +124,21 @@ public class MainTimeHandler : MonoBehaviour {
 		int a = 0;
 		while (a == 0) {
 			talk = PlayerPrefs.GetInt ("talk", 5);
-			lastTime = PlayerPrefs.GetString ("TalkLastTime", System.DateTime.Now.ToString ());
-			System.DateTime lastDateTime = System.DateTime.Parse (lastTime);
-			System.TimeSpan compareTime = System.DateTime.Now - lastDateTime;
+
+            System.DateTime dateTimenow = System.DateTime.Now.AddHours(-1);
+            lastTime = PlayerPrefs.GetString("TalkLastTime", dateTimenow.ToString());
+            System.DateTime lastDateTime;
+            try
+            {
+                lastDateTime = System.DateTime.Parse(lastTime);
+            }
+            catch (System.Exception)
+            {
+                lastTime = System.DateTime.Now.AddHours(-10).ToString();
+            }
+            lastDateTime = System.DateTime.Parse(lastTime);
+
+            System.TimeSpan compareTime = System.DateTime.Now - lastDateTime;
             if ((int)compareTime.TotalSeconds < 0)
             {
                 compareTime = System.DateTime.Now - System.DateTime.Now;

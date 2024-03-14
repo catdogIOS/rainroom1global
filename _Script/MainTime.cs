@@ -92,7 +92,7 @@ public class MainTime : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.GetInt("emergencyCODE", 0) == 0)
+        if (PlayerPrefs.GetInt("emergencyCODE2", 0) == 0)
         {
             System.DateTime turnBackTime = System.DateTime.Now.AddHours(-12);
             PlayerPrefs.SetString("saveGudoc", turnBackTime.ToString());
@@ -100,7 +100,7 @@ public class MainTime : MonoBehaviour
             turnBackTime = System.DateTime.Now.AddHours(-1);
             PlayerPrefs.SetString("savePaper", turnBackTime.ToString());
 
-            turnBackTime = System.DateTime.Now.AddHours(-10);
+            turnBackTime = System.DateTime.Now.AddHours(-13);
             PlayerPrefs.SetString("seedLastTime", turnBackTime.ToString());
 
             turnBackTime = System.DateTime.Now.AddHours(-1);
@@ -124,7 +124,7 @@ public class MainTime : MonoBehaviour
             turnBackTime = System.DateTime.Now.AddHours(-1);
             PlayerPrefs.SetString("adtimespark", turnBackTime.ToString());
 
-            PlayerPrefs.SetInt("emergencyCODE", 99);
+            PlayerPrefs.SetInt("emergencyCODE2", 99);
         }
 
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -295,8 +295,19 @@ public class MainTime : MonoBehaviour
     {
 
         //신문시간
-        nowGudog = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        nowGudog = System.DateTime.Now.AddHours(-12);
         lastGudog = PlayerPrefs.GetString("saveGudoc", nowGudog.ToString());
+
+        System.DateTime lastDateTime;
+        try
+        {
+            lastDateTime = System.DateTime.Parse(lastGudog);
+        }
+        catch (System.Exception)
+        {
+            lastGudog = System.DateTime.Now.AddHours(-12).ToString();
+        }
+
         lastDateGudog = System.DateTime.Parse(lastGudog);
         compareGudog = System.DateTime.Now - lastDateGudog;
         hG = (int)compareGudog.TotalHours;
@@ -348,8 +359,20 @@ public class MainTime : MonoBehaviour
     {
 
         //시간
-        nowPaper = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        nowPaper = System.DateTime.Now.AddHours(-1);
         lastPaper = PlayerPrefs.GetString("savePaper", nowPaper.ToString());
+
+
+        System.DateTime lastDateTime;
+        try
+        {
+            lastDateTime = System.DateTime.Parse(lastPaper);
+        }
+        catch (System.Exception)
+        {
+            lastPaper = System.DateTime.Now.AddHours(-1).ToString();
+        }
+
         lastDatePaper = System.DateTime.Parse(lastPaper);
         comparePaper = System.DateTime.Now - lastDatePaper;
         hGp = (int)comparePaper.TotalHours;
@@ -690,9 +713,19 @@ public class MainTime : MonoBehaviour
     {
         now = PlayerPrefs.GetInt("seedlv", 0);
         grow = PlayerPrefs.GetInt("seedgrow", 1);
-        System.DateTime d = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        System.DateTime d = System.DateTime.Now.AddHours(-13);
         seedlastTime = PlayerPrefs.GetString("seedLastTime", d.ToString());
-        System.DateTime lastDateTime = System.DateTime.Parse(seedlastTime);
+        System.DateTime lastDateTime;
+        try
+        {
+            lastDateTime = System.DateTime.Parse(seedlastTime);
+        }
+        catch (System.Exception)
+        {
+            seedlastTime = System.DateTime.Now.AddHours(-13).ToString();
+        }
+
+        lastDateTime = System.DateTime.Parse(seedlastTime);
         System.TimeSpan compareTime = System.DateTime.Now - lastDateTime;
         shours = (int)compareTime.TotalHours;
         sminute = (int)compareTime.TotalMinutes;
@@ -754,9 +787,20 @@ public class MainTime : MonoBehaviour
         string lastTime;
         int ac, acb;
         //외출시간
-        now = new System.DateTime(1980, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
+        now = System.DateTime.Now.AddHours(-1);
         lastTime = PlayerPrefs.GetString("outtime", now.ToString());
-        System.DateTime lastDateTime = System.DateTime.Parse(lastTime);
+
+        System.DateTime lastDateTime;
+        try
+        {
+            lastDateTime = System.DateTime.Parse(lastTime);
+        }
+        catch (System.Exception)
+        {
+            lastTime = System.DateTime.Now.AddHours(-1).ToString();
+        }
+
+        lastDateTime = System.DateTime.Parse(lastTime);
         System.TimeSpan compareTime = System.DateTime.Now - lastDateTime;
         ac = (int)compareTime.TotalMinutes;
         acb = (int)compareTime.TotalSeconds;
