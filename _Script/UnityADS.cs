@@ -41,7 +41,7 @@ public class UnityADS : MonoBehaviour
     void Start()
     {
 
-        Debug.Log("UnityADS광고_스타트");
+        //Debug.Log("UnityADS광고_스타트");
         IronSource.Agent.validateIntegration();
 
         LevelPlay.Init(appKey, adFormats: new[] { com.unity3d.mediation.LevelPlayAdFormat.REWARDED });
@@ -64,7 +64,7 @@ public class UnityADS : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("UnityADS광고_OnDisable");
+        //Debug.Log("UnityADS광고_OnDisable");
         LevelPlay.OnInitSuccess -= SdkInitializationCompletedEvent;
         LevelPlay.OnInitFailed -= SdkInitializationFailedEvent;
 
@@ -83,7 +83,7 @@ public class UnityADS : MonoBehaviour
 
     void EnableAds()
     {
-        Debug.Log("UnityADS광고_EnableAds");
+        //Debug.Log("UnityADS광고_EnableAds");
         //Add ImpressionSuccess Event
         IronSourceEvents.onImpressionDataReadyEvent -= ImpressionDataReadyEvent;
 
@@ -110,14 +110,14 @@ public class UnityADS : MonoBehaviour
     }
     void OnApplicationPause(bool isPaused)
     {
-        Debug.Log("unity-script: OnApplicationPause = " + isPaused);
+        //Debug.Log("unity-script: OnApplicationPause = " + isPaused);
         IronSource.Agent.onApplicationPause(isPaused);
     }
 
 
     void RewardedVideoOnAdOpenedEvent(IronSourceAdInfo adInfo)
     {
-        Debug.Log("unity-script: I got RewardedVideoOnAdOpenedEvent With AdInfo " + adInfo);
+        //Debug.Log("unity-script: I got RewardedVideoOnAdOpenedEvent With AdInfo " + adInfo);
 
             if (se_back.mute)
             {
@@ -133,12 +133,12 @@ public class UnityADS : MonoBehaviour
 
     void RewardedVideoOnAdAvailable(IronSourceAdInfo adInfo)
     {
-        Debug.Log("unity-script: I got RewardedVideoOnAdAvailable With AdInfo " + adInfo);
+        //Debug.Log("unity-script: I got RewardedVideoOnAdAvailable With AdInfo " + adInfo);
     }
 
     void RewardedVideoOnAdUnavailable()
     {
-        Debug.Log("unity-script: I got RewardedVideoOnAdUnavailable");
+        //Debug.Log("unity-script: I got RewardedVideoOnAdUnavailable");
     }
 
     void RewardedVideoOnAdShowFailedEvent(IronSourceError ironSourceError, IronSourceAdInfo adInfo)
@@ -151,32 +151,32 @@ public class UnityADS : MonoBehaviour
 
     void RewardedVideoOnAdClickedEvent(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo adInfo)
     {
-        Debug.Log("unity-script: I got RewardedVideoOnAdClickedEvent With Placement" + ironSourcePlacement + "And AdInfo " + adInfo);
+        //Debug.Log("unity-script: I got RewardedVideoOnAdClickedEvent With Placement" + ironSourcePlacement + "And AdInfo " + adInfo);
     }
 
 
 
     void SdkInitializationCompletedEvent(LevelPlayConfiguration config)
     {
-        Debug.Log("unity-script: I got SdkInitializationCompletedEvent with config: " + config);
+        //Debug.Log("unity-script: I got SdkInitializationCompletedEvent with config: " + config);
         EnableAds();
     }
 
     void SdkInitializationFailedEvent(LevelPlayInitError error)
     {
-        Debug.Log("unity-script: I got SdkInitializationFailedEvent with error: " + error);
+        //Debug.Log("unity-script: I got SdkInitializationFailedEvent with error: " + error);
     }
 
     void ImpressionDataReadyEvent(IronSourceImpressionData impressionData)
     {
-        Debug.Log("unity - script: I got ImpressionDataReadyEvent ToString(): " + impressionData.ToString());
-        Debug.Log("unity - script: I got ImpressionDataReadyEvent allData: " + impressionData.allData);
+        //Debug.Log("unity - script: I got ImpressionDataReadyEvent ToString(): " + impressionData.ToString());
+        //Debug.Log("unity - script: I got ImpressionDataReadyEvent allData: " + impressionData.allData);
     }
 
 
     void RewardedVideoOnAdClosedEvent(IronSourceAdInfo adInfo)
     {
-        Debug.Log("닫기 이벤트 UnityADS");
+        //Debug.Log("닫기 이벤트 UnityADS");
         se_back.mute = false;
         if (isMute)
         {
@@ -230,7 +230,7 @@ public class UnityADS : MonoBehaviour
 
         if (init_i == 0)
         {
-            Debug.Log("UnityADS광고_대화");
+            //Debug.Log("UnityADS광고_대화");
             lastDateTimenow = System.DateTime.Now;
             if (PlayerPrefs.GetInt("scene", 0) == 2)
             {
@@ -253,7 +253,7 @@ public class UnityADS : MonoBehaviour
         }
         else if (init_i == 2)
         {
-            Debug.Log("UnityADS광고_외출");
+            //Debug.Log("UnityADS광고_외출");
             PlayerPrefs.SetInt("outtimecut", 4);
             cutTime_btn.interactable = false;
             Toast_obj.SetActive(true);
@@ -302,7 +302,7 @@ public class UnityADS : MonoBehaviour
         while (mG > -1)
         {
             sG = PlayerPrefs.GetInt("secf", 240);
-            Debug.Log(sG);
+            //Debug.Log(sG);
             mG = (int)(sG / 60);
             sG = sG - (sG / 60) * 60;
             if (sG < 0)
@@ -323,7 +323,7 @@ public class UnityADS : MonoBehaviour
             }
             PlayerPrefs.SetInt("secf", sG);
             yield return new WaitForSeconds(1f);
-            Debug.Log("sg" + sG);
+            //Debug.Log("sg" + sG);
         }
     }
     IEnumerator adAniTime()
@@ -384,7 +384,7 @@ public class UnityADS : MonoBehaviour
         while (mG2 > -1)
         {
             sG2 = PlayerPrefs.GetInt("secf2", 240);
-            Debug.Log(sG);
+            //Debug.Log(sG);
             mG2 = (int)(sG2 / 60);
             sG2 = sG2 - (sG2 / 60) * 60;
             if (sG2 < 0)
@@ -404,7 +404,7 @@ public class UnityADS : MonoBehaviour
                 sG2 = -1;
             }
             PlayerPrefs.SetInt("secf2", sG2);
-            Debug.Log("sg2" + sG2);
+            //Debug.Log("sg2" + sG2);
             yield return new WaitForSeconds(1f);
         }
     }
