@@ -1,0 +1,71 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using GoogleMobileAds.Ump.Api;
+using GoogleMobileAds.Api;
+using UnityEngine.UI;
+
+public class GDPRmessage : MonoBehaviour
+{
+    [SerializeField, Tooltip("Button to show the privacy options form.")]
+    public Button _privacyButton;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+        // Set tag for under age of consent.
+        // Here false means users are not under age of consent.
+        ConsentRequestParameters request = new ConsentRequestParameters
+        {
+            TagForUnderAgeOfConsent = false,
+        };
+
+        // Check the current consent information status.
+        ConsentInformation.Update(request, OnConsentInfoUpdated);
+    }
+    void OnConsentInfoUpdated(FormError consentError)
+    {
+        if (consentError != null)
+        {
+            // Handle the error.
+            UnityEngine.Debug.LogError(consentError);
+            return;
+        }
+        // If the error is null, the consent information state was updated.
+        // You are now ready to check if a form is available.
+        ConsentForm.LoadAndShowConsentFormIfRequired((FormError formError) =>
+        {
+            if (formError != null)
+            {
+                // Consent gathering failed.
+                UnityEngine.Debug.LogError(consentError);
+                return;
+            }
+
+            if (ConsentInformation.CanRequestAds())
+            {
+                FindObjectOfType<AdmobADS>().InitializeAds();
+            }
+        });
+    }
+    public void ShowPrivacyOptionsForm()
+    {
+        Debug.Log("Showing privacy options form.");
+
+        ConsentForm.ShowPrivacyOptionsForm((FormError showError) =>
+        {
+            if (showError != null)
+            {
+                Debug.LogError("Error showing privacy options form with error: " + showError.Message);
+            }
+            // Enable the privacy settings button.
+            if (_privacyButton != null)
+            {
+                _privacyButton.interactable =
+                    ConsentInformation.PrivacyOptionsRequirementStatus ==
+                    PrivacyOptionsRequirementStatus.Required;
+            }
+        });
+    }
+}

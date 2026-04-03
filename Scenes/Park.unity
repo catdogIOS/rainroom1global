@@ -1705,9 +1705,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2145333748}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ShowRewardedAd
+      - m_Target: {fileID: 2145333746}
+        m_TargetAssemblyTypeName: AdmobADS, Assembly-CSharp
+        m_MethodName: showAdmobVideo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11553,13 +11553,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145333736}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 822ea04360ddb17468125cd2e372eb3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Toast_obj: {fileID: 918926949}
-  blackimg: {fileID: 1806657452}
   adPop_txt: {fileID: 1411855429}
   cutTime_btn: {fileID: 0}
   GM: {fileID: 2145333736}
@@ -11584,7 +11583,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145333736}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7569b57cb895c445e83cbe9c99178a43, type: 3}
   m_Name: 

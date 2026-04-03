@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
-using Unity.Services.LevelPlay;
+//using Unity.Services.LevelPlay;
 
 public class UnityADS : MonoBehaviour
 {
@@ -40,7 +40,7 @@ public class UnityADS : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+/*
         //Debug.Log("UnityADS광고_스타트");
         IronSource.Agent.validateIntegration();
 
@@ -51,7 +51,7 @@ public class UnityADS : MonoBehaviour
         LevelPlay.OnInitSuccess += SdkInitializationCompletedEvent;
         LevelPlay.OnInitFailed += SdkInitializationFailedEvent;
 
-
+*/
 
         if (PlayerPrefs.GetInt("outtimecut", 4) == 4 && PlayerPrefs.GetInt("scene", 0) == 0)
         {
@@ -61,7 +61,7 @@ public class UnityADS : MonoBehaviour
         color = new Color(1f, 1f, 1f);
 
     }
-
+/*
     private void OnDisable()
     {
         //Debug.Log("UnityADS광고_OnDisable");
@@ -183,7 +183,7 @@ public class UnityADS : MonoBehaviour
             se_back.mute = true;
         }
     }
-
+*/
 
     public void ShowRewardedAd()
     {
@@ -195,7 +195,7 @@ public class UnityADS : MonoBehaviour
         else
         {
             init_i = 0;
-
+/*
             if (IronSource.Agent.isRewardedVideoAvailable())
             {
                 IronSource.Agent.showRewardedVideo("RewardTalk");
@@ -203,11 +203,11 @@ public class UnityADS : MonoBehaviour
             else
             {
             }
-
+*/
         }
     }
 
-
+/*
     public void ShowRewardedAd2()
     {
         init_i = 2;
@@ -220,9 +220,9 @@ public class UnityADS : MonoBehaviour
         }
         
     }
+*/
 
-
-
+/*
     void RewardedVideoOnAdRewardedEvent(IronSourcePlacement ironSourcePlacement, IronSourceAdInfo adInfo)
     {
         if (ironSourcePlacement.getPlacementName() == "RewardTalk")
@@ -261,7 +261,7 @@ public class UnityADS : MonoBehaviour
         }
         }
     }
-
+*/
     public void adYN()
     {
         PlayerPrefs.SetInt("adrunout", 0);

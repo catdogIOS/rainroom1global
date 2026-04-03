@@ -6065,6 +6065,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 300375160}
+  - component: {fileID: 300375175}
   - component: {fileID: 300375159}
   - component: {fileID: 300375161}
   - component: {fileID: 300375162}
@@ -7039,13 +7040,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300375158}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 822ea04360ddb17468125cd2e372eb3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Toast_obj: {fileID: 695030164}
-  blackimg: {fileID: 1490912846}
   adPop_txt: {fileID: 439931070}
   cutTime_btn: {fileID: 1226738012}
   GM: {fileID: 300375158}
@@ -7076,7 +7076,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 300375158}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7569b57cb895c445e83cbe9c99178a43, type: 3}
   m_Name: 
@@ -7095,6 +7095,19 @@ MonoBehaviour:
   GM: {fileID: 300375158}
   init_i: 0
   isMute: 0
+--- !u!114 &300375175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300375158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e822ddca7d9a4d0ca046dcf26df915a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _privacyButton: {fileID: 0}
 --- !u!1 &301776945
 GameObject:
   m_ObjectHideFlags: 0
@@ -7881,9 +7894,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 300375174}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ShowRewardedAd
+      - m_Target: {fileID: 300375172}
+        m_TargetAssemblyTypeName: AdmobADS, Assembly-CSharp
+        m_MethodName: showAdmobVideo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29470,9 +29483,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 300375174}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ShowRewardedAd2
+      - m_Target: {fileID: 300375172}
+        m_TargetAssemblyTypeName: AdmobADS, Assembly-CSharp
+        m_MethodName: ShowRewardedInterstitialAd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

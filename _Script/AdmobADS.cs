@@ -1,25 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using GoogleMobileAds.Api;
+using GoogleMobileAds.Api;
 using UnityEngine.UI;
 using System;
+using GoogleMobileAds.Api.Mediation.IronSource;
+using GoogleMobileAds.Api.Mediation.UnityAds;
 
 public class AdmobADS : MonoBehaviour {
     
-    /*AdRequest request;
-
     //영상
-    private RewardedAd rewardedAd;
-    string adUnitIdvideo;
+    private RewardedAd rewardedAd, rewardedAdout;
+    private string _rewardedAdUnitId;
 
 
     //보상형 전면 광고
-    private RewardedInterstitialAd rewardedInterstitialAd;
-    */
+    private string _GoOutADSid;
+
     int rewardCoin;
     Color color;
-    public GameObject Toast_obj, blackimg;
+    public GameObject Toast_obj; ////blackimg
     public Text adPop_txt;
     public Button cutTime_btn;
 
@@ -27,184 +27,311 @@ public class AdmobADS : MonoBehaviour {
     System.DateTime lastDateTimenow;
 
     public GameObject GM;
+    bool rewardEarned = false;
 
+    private void Awake()
+    {
+
+        GoogleMobileAds.Mediation.IronSource.Api.IronSource.SetMetaData("do_not_sell", "true");
+        GoogleMobileAds.Mediation.UnityAds.Api.UnityAds.SetConsentMetaData("gdpr.consent", true);
+        GoogleMobileAds.Mediation.UnityAds.Api.UnityAds.SetConsentMetaData("privacy.consent", true);
+    }
 
 
     // Use this for initialization 앱 ID
-    void Start () {
-        /*
-        MobileAds.Initialize(initStatus => { });
-#if UNITY_ANDROID
-        string appId = "ca-app-pub-9179569099191885~6058797220"; //테스트용ca-app-pub-3940256099942544~3347511713
-#elif UNITY_IPHONE
-            string appId = "ca-app-pub-3940256099942544~1458002511";
-#else
-        string appId = "unexpected_platform";
-#endif
-        */
+    void Start ()
+    {
+    //var reqConfig = new RequestConfiguration
+    //{
+    //    TestDeviceIds = new List<string> { "DB1F9611-A3BB-4AF4-B169-1CEC9C22B0F6" }
+    //};
+        color = new Color(1f, 1f, 1f);
+
+        _rewardedAdUnitId = "ca-app-pub-9179569099191885/7953689433";
+        _GoOutADSid = "ca-app-pub-9179569099191885/3126866600";
+
+        InitializeAds();
 
         if (PlayerPrefs.GetInt("outtimecut", 0) == 4 && PlayerPrefs.GetInt("scene", 0) == 0)
         {
             cutTime_btn.interactable = false;
         }
-        color = new Color(1f, 1f, 1f);
-
-        /*
-        //보상형광고
-#if UNITY_ANDROID
-        adUnitIdvideo = "ca-app-pub-9179569099191885/9339319267"; // 테스트 ca-app-pub-3940256099942544/5224354917
-#elif UNITY_IPHONE
-            adUnitIdvideo = "ca-app-pub-3940256099942544/1712485313";
-#else
-        adUnitIdvideo = "unexpected_platform";
-#endif
-
-
-        this.rewardedAd = new RewardedAd(adUnitIdvideo);
-
-        // Called when the user should be rewarded for watching a video.
-        this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
-        // Called when the ad is closed.
-        this.rewardedAd.OnAdClosed += HandleRewardBasedVideoClosed;
-
-        RequestRewardedVideo();
-
-        // 보상형 전면
-        AdRequest request = new AdRequest.Builder().Build();
-        // Load the rewarded ad with the request.
-        RewardedInterstitialAd.LoadAd("ca-app-pub-9179569099191885/1077685867", request, adLoadCallback);
-        */
 
     }
+    public void InitializeAds()
+    {
 
-    //terminating with uncaught exception of type Il2CppExceptionWrapper ㅇㅔ러 없앰
-    private void OnDisable()
-    {
-        //rewardedAd.OnUserEarnedReward -= HandleUserEarnedReward;
-        //rewardedAd.OnAdClosed -= HandleRewardBasedVideoClosed;
-    }
+        if (Application.internetReachability != NetworkReachability.NotReachable) //인터넷연결된경우?
+        {
+            // Initialize the Google Mobile Ads SDK.
+            MobileAds.Initialize((InitializationStatus initStatus) =>
+            {
+                LoadRewardedAd();
+                LoadRewardedAd2();
+                // This callback is called once the MobileAds SDK is initialized.
 
-    
-    //동영상
-    private void RequestRewardedVideo()
-    {
-        // Create an empty ad request.
-        //request = new AdRequest.Builder().Build();
-        // Load the rewarded video ad with the request.
-        //this.rewardedAd.LoadAd(request);
-    }
-    /*
-    //시청보상
-    public void HandleUserEarnedReward(object sender, Reward args)
-    {
-        lastDateTimenow = System.DateTime.Now;
-        if (PlayerPrefs.GetInt("scene", 0) == 2)
-        {
-            PlayerPrefs.SetString("adtimespark", lastDateTimenow.ToString());
-        }
-        else if (PlayerPrefs.GetInt("scene", 0) == 3)
-        {
-            PlayerPrefs.SetString("adtimescity", lastDateTimenow.ToString());
-        }
-        else if (PlayerPrefs.GetInt("scene", 0) == 0)
-        {
-            PlayerPrefs.SetString("adtimes", lastDateTimenow.ToString());
+                /*
+                // initStatus 안에 어댑터 목록이 있어야 함
+                Dictionary<string, AdapterStatus> map = initStatus.getAdapterStatusMap();
+                foreach (var keyValuePair in map)
+                {
+                    string className = keyValuePair.Key;
+                    AdapterStatus status = keyValuePair.Value;
+                    Debug.Log($"어댑터: {className}, 상태: {status.InitializationState}");
+                }
+                */
+            });
+
         }
         else
         {
-            PlayerPrefs.SetString("adtimes", lastDateTimenow.ToString());
+            //Debug.Log("No Internet, skip init for now. 인터넷 연결 불가능");
         }
+    }
+
+
+
+    public void OnButtonClick()
+    {
+        MobileAds.OpenAdInspector((AdInspectorError error) =>
+        {
+            if (error != null)
+                Debug.Log($"Ad Inspector 오류: {error.GetMessage()}");
+            // Error will be set if there was an issue and the inspector was not displayed.
+        });
+    }
+
+    public void LoadRewardedAd()
+    {
+        // Clean up the old ad before loading a new one.
+        if (rewardedAd != null)
+        {
+            rewardedAd.Destroy();
+            rewardedAd = null;
+        }
+
+        //Debug.Log("Loading the rewarded ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        RewardedAd.Load(_rewardedAdUnitId, adRequest,
+            (RewardedAd ad, LoadAdError error) =>
+            {
+                // if error is not null, the load request failed.
+                if (error != null || ad == null)
+                {
+                    //Debug.LogError("Rewarded ad failed to load an ad " + "with error : " + error);
+                    return;
+                }
+
+                //Debug.Log("Rewarded ad loaded with response : " + ad.GetResponseInfo());
+
+                rewardedAd = ad;
+                RegisterEventHandlers(ad); //이벤트 등록
+            });
+
+    }
+
+
+    private void RegisterEventHandlers(RewardedAd ad)
+    {
+        // Raised when the ad is estimated to have earned money.
+        ad.OnAdPaid += (AdValue adValue) =>
+        {
+            //Debug.Log("광고");
+        };
+
+        ad.OnAdFullScreenContentClosed += () =>
+        {
+            if (rewardEarned)
+            {
+               // Debug.Log("광고닫기");
+                giveMeReward();
+                rewardEarned = false;
+            }
+
+
+        };
+    }
+
+
+    void giveMeReward()
+    {
         GM.GetComponent<ShowAds>().AdReward();
         PlayerPrefs.SetInt("talk", 5);
         PlayerPrefs.SetInt("blad", 1);
-    }
-    */
-    //동영상닫음
-    private void HandleRewardBasedVideoClosed(object sender, System.EventArgs args)
-    {
-        blackimg.SetActive(false);
-        RequestRewardedVideo();
+        LoadRewardedAd();
     }
 
+
+
+
     public void showAdmobVideo()
-    {/*
+    {
+        //Debug.Log("상태보기 : " + rewardedAd);
+
         if (PlayerPrefs.GetInt("talk", 5) >= 5)
         {
             Toast_obj.SetActive(true);
-            adPop_txt.text = "Number of Talk's already the max," + "\n" + "so you can't";
+            adPop_txt.text = "Number of Talk's already the max," + "\n" + "so you can't.";
         }
         else
         {
-            if (this.rewardedAd.IsLoaded())
+            if (rewardedAd != null && rewardedAd.CanShowAd())
             {
-                blackimg.SetActive(true);
-                this.rewardedAd.Show();
+                //blackimg.SetActive(true);
+                rewardedAd.Show((Reward reward) =>
+                {
+                    rewardEarned = true;
+                    lastDateTimenow = System.DateTime.Now;
+                    if (PlayerPrefs.GetInt("scene", 0) == 2)
+                    {
+                        PlayerPrefs.SetString("adtimespark", lastDateTimenow.ToString());
+                    }
+                    else if (PlayerPrefs.GetInt("scene", 0) == 3)
+                    {
+                        PlayerPrefs.SetString("adtimescity", lastDateTimenow.ToString());
+                    }
+                    else if (PlayerPrefs.GetInt("scene", 0) == 0)
+                    {
+                        PlayerPrefs.SetString("adtimes", lastDateTimenow.ToString());
+                    }
+                    else
+                    {
+                        PlayerPrefs.SetString("adtimes", lastDateTimenow.ToString());
+                    }
+                });
+                PlayerPrefs.Save();
             }
             else
             {
                 Toast_obj.SetActive(true);
                 adPop_txt.text = "Can't see it yet." + "\n" + "Try later.";
+                LoadRewardedAd();
             }
         }
-        */
     }
-    
+
+
+
+    public void LoadRewardedAd2()
+    {
+        // Clean up the old ad before loading a new one.
+        if (rewardedAdout != null)
+        {
+            rewardedAdout.Destroy();
+            rewardedAdout = null;
+        }
+
+        //Debug.Log("Loading the rewarded ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        RewardedAd.Load(_GoOutADSid, adRequest,
+            (RewardedAd ad, LoadAdError error) =>
+            {
+                // if error is not null, the load request failed.
+                if (error != null || ad == null)
+                {
+                    //Debug.LogError("Rewarded ad failed to load an ad " + "with error : " + error);
+                    return;
+                }
+
+                //Debug.Log("Rewarded ad loaded with response : " + ad.GetResponseInfo());
+
+                rewardedAdout = ad;
+                RegisterEventHandlers2(ad); //이벤트 등록
+            });
+
+    }
+
+
+
+
+
+
 
     /*
-    public void HandleOnAdClosed(object sender, EventArgs args)
+    public void LoadRewardedInterstitialAd()
     {
-        MonoBehaviour.print("HandleAdClosed event received");
-        interstitial.Destroy();
-    }
-    public void HandleOnAdOpened(object sender, EventArgs args)
-    {
-        MonoBehaviour.print("HandleAdOpened event received");
+        // Clean up the old ad before loading a new one.
+        if (rewardedInterstitialAd != null)
+        {
+            rewardedInterstitialAd.Destroy();
+            rewardedInterstitialAd = null;
+        }
+
+        //Debug.Log("Loading the rewarded interstitial ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        RewardedInterstitialAd.Load(_GoOutADSid, adRequest,
+            (RewardedInterstitialAd ad, LoadAdError error) =>
+            {
+                // if error is not null, the load request failed.
+                if (error != null || ad == null)
+                {
+                    //Debug.LogError("rewarded interstitial ad failed to load an ad " + "with error : " + error);
+                    return;
+                }
+
+                //Debug.Log("Rewarded interstitial ad loaded with response : " + ad.GetResponseInfo());
+
+                rewardedInterstitialAd = ad;
+            });
     }
     */
-    /*
-        //보상형 전면 광고
-    private void adLoadCallback(RewardedInterstitialAd ad, AdFailedToLoadEventArgs arg2)
-    {
-        if (arg2 == null)
-        {
-            rewardedInterstitialAd = ad;
-            rewardedInterstitialAd.OnAdFailedToPresentFullScreenContent += HandleAdFailedToPresent;
-
-        }
-    }
 
     //보상형 전면 광고 보여주기
     public void ShowRewardedInterstitialAd()
     {
-        if (rewardedInterstitialAd != null)
+        //Debug.Log("상태보기 : " + rewardedInterstitialAd);
+        if (rewardedAdout != null && rewardedAdout.CanShowAd())
         {
-            blackimg.SetActive(true);
-            rewardedInterstitialAd.Show(userEarnedRewardCallback);
+            rewardedAdout.Show((Reward reward) =>
+            {
+                rewardEarned = true;
+                //blackimg.SetActive(true);
+                // TODO: Reward the user.
+                cutTime_btn.interactable = false;
+
+                Toast_obj.SetActive(true);
+                adPop_txt.text = "Time needed to go out" + "\n" + "was reduced.";
+            });
         }
+        else
+        {
+            Toast_obj.SetActive(true);
+            adPop_txt.text = "Can't see it yet." + "\n" + "Try later.";
+            LoadRewardedAd2();
+        }
+
     }
 
-    private void userEarnedRewardCallback(Reward reward)
+
+    private void RegisterEventHandlers2(RewardedAd ad)
     {
-        // TODO: Reward the user.
-        PlayerPrefs.SetInt("outtimecut", 4);
-        cutTime_btn.interactable = false;
-        blackimg.SetActive(false);
+        // Raised when the ad is estimated to have earned money.
+        ad.OnAdPaid += (AdValue adValue) =>
+        {
+            //Debug.Log("광고");
+        };
 
-
-
-        Toast_obj.SetActive(true);
-        adPop_txt.text = "Time needed to go out" + "\n" + "was reduced.";
+        ad.OnAdFullScreenContentClosed += () =>
+        {
+            if (rewardEarned)
+            {
+                PlayerPrefs.SetInt("outtimecut", 4);
+                LoadRewardedAd2();
+                rewardEarned = false;
+            }
+        };
     }
-    private void HandleAdFailedToPresent(object sender, AdErrorEventArgs args)
-    {
-        //MonoBehavior.print("Rewarded interstitial ad has failed to present.");
-    }
 
-
-    //방지
-    public void closeBlackImg()
-    {
-        blackimg.SetActive(false);
-    }
-    */
 }
