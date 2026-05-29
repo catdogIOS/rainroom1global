@@ -4,7 +4,6 @@ using UnityEngine;
 using GoogleMobileAds.Api;
 using UnityEngine.UI;
 using System;
-using GoogleMobileAds.Api.Mediation.IronSource;
 using GoogleMobileAds.Api.Mediation.UnityAds;
 
 public class AdmobADS : MonoBehaviour {
@@ -32,7 +31,6 @@ public class AdmobADS : MonoBehaviour {
     private void Awake()
     {
 
-        GoogleMobileAds.Mediation.IronSource.Api.IronSource.SetMetaData("do_not_sell", "true");
         GoogleMobileAds.Mediation.UnityAds.Api.UnityAds.SetConsentMetaData("gdpr.consent", true);
         GoogleMobileAds.Mediation.UnityAds.Api.UnityAds.SetConsentMetaData("privacy.consent", true);
     }
