@@ -87,12 +87,12 @@ public class MainTime : MonoBehaviour
     public Camera camera_c;
 
     public GameObject title_obj;
-    public GameObject blackAd_obj;
+    //public GameObject blackAd_obj;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.GetInt("emergencyCODE2", 0) == 0)
+        if (PlayerPrefs.GetInt("emergencyCODE3", 0) == 0)
         {
             System.DateTime turnBackTime = System.DateTime.Now.AddHours(-12);
             PlayerPrefs.SetString("saveGudoc", turnBackTime.ToString());
@@ -124,7 +124,7 @@ public class MainTime : MonoBehaviour
             turnBackTime = System.DateTime.Now.AddHours(-1);
             PlayerPrefs.SetString("adtimespark", turnBackTime.ToString());
 
-            PlayerPrefs.SetInt("emergencyCODE2", 99);
+            PlayerPrefs.SetInt("emergencyCODE3", 99);
         }
 
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
@@ -199,7 +199,7 @@ public class MainTime : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("blad", 0) == 1)
             {
-                blackAd_obj.SetActive(false);
+                //blackAd_obj.SetActive(false);
                 PlayerPrefs.SetInt("blad", 0);
             }
             //최대량 제한 빗물 마음

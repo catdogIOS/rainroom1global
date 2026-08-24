@@ -27,12 +27,18 @@ public class RoomText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        data_diray = CSVReader.Read("CSV/deardiary"); //대사 불러오기   
-        data_news = CSVReader.Read("CSV/news"); //대사 불러오기   
+        csvvreader();
 
         allArr[0] = 60; //일기
         allArr[1] = 100; //신문
     }
+
+    async void csvvreader()
+    {
+        data_diray = await CSVReader.ReadAsync("Assets/CSV/deardiary.csv");
+        data_news = await CSVReader.ReadAsync("Assets/CSV/news.csv");
+    }
+
 
     public int[] GetRandomInt(int length) //중복없는 난수생성기 length에 줄수 넣어호출
     {

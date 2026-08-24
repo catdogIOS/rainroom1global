@@ -18,6 +18,7 @@ public class MainMenuEvt : MonoBehaviour
 
     //대화속도
     public Text speed_txt;
+     public GameObject _privacyButton;
     
 
     // Start is called before the first frame update
@@ -68,7 +69,12 @@ public class MainMenuEvt : MonoBehaviour
 
     }
     
-
+    public void GDPRcomeon()
+    {
+        var gdprManager = FindObjectOfType<GDPRmessage>();
+        gdprManager.ShowPrivacyOptionsForm();
+        Debug.Log("GDPR 버튼 클릭됨, ShowPrivacyOptionsForm 호출");
+    }
 
 
     //메뉴창 닫기 열기
@@ -101,6 +107,24 @@ public class MainMenuEvt : MonoBehaviour
             menu_obj.SetActive(true);
             option_obj.SetActive(false);
         }
+        
+            // 씬에서 GDPRmessage 스크립트를 찾아 함수를 실행
+            var gdprManager = FindObjectOfType<GDPRmessage>();
+
+            if (gdprManager == null)
+            {
+                Debug.LogWarning("씬에 GDPRmessage가 없습니다!");
+                _privacyButton.SetActive(false); // GameObject이므로 바로 SetActive 사용
+            }
+            else
+            {
+                // 매니저가 있을 때: 유저 지역이 필수(Required)인지 확인!
+                bool isRequired = GoogleMobileAds.Ump.Api.ConsentInformation.PrivacyOptionsRequirementStatus ==
+                                  GoogleMobileAds.Ump.Api.PrivacyOptionsRequirementStatus.Required;
+
+                Debug.Log("씬에서 GDPRmessage를 찾았습니다. 유럽 지역 여부: " + isRequired);
+                _privacyButton.SetActive(isRequired); // GameObject이므로 바로 SetActive 사용
+            }
     }
 
 

@@ -7,7 +7,7 @@ using System.Linq; //랜덤필
 public class ParkTalk : MonoBehaviour
 {
     List<Dictionary<string, object>> data_talk, data_etc; //csv파일
-    int etcNum = 0;
+   // int etcNum = 0;
     public Text Text_obj, dal_Text_obj; //선언 및 보여질
     string[] testText_cut; //대사 끊기
     string text_str; //실질적 대사출력
@@ -18,7 +18,7 @@ public class ParkTalk : MonoBehaviour
     public GameObject catheart, cat_eat_txt, cat_enough_txt, cat_already_txt, dal_eat_txt, dal_enough_txt, dal_already_txt;
 
     int[] allArr = new int[3]; 
-    int loveLv = 0; //호감도 단계라고 생각하면 됨
+   // int loveLv = 0; //호감도 단계라고 생각하면 됨
     int countTalkNum;//대화횟수
 
     float speedF = 0.05f;
@@ -42,6 +42,8 @@ public class ParkTalk : MonoBehaviour
     public GameObject catPop_obj;
     public Text txt_pop;
 
+    private string[] lineStr;
+    private int cnt;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -51,13 +53,22 @@ public class ParkTalk : MonoBehaviour
         }
 
     }
-        
+
+    async void csvvreader()
+    {
+        data_talk = await CSVReader.ReadAsync("Assets/CSV/talk_out.csv");
+        data_etc = await CSVReader.ReadAsync("Assets/CSV/etc_park.csv");
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        data_talk = CSVReader.Read("CSV/talk_out");
-        data_etc = CSVReader.Read("CSV/etc_park");
+
+        //대화속도
+        speedF = PlayerPrefs.GetFloat("talkspeed", 0.05f);
+
+        csvvreader();
 
         allArr[0] = 100;//대사
         allArr[1] = 15; //쓰레기
@@ -125,7 +136,7 @@ public class ParkTalk : MonoBehaviour
                 return randArr;
 
 
-                break;
+               // break;
 
             case 15://쓰레기
                 
@@ -151,7 +162,7 @@ public class ParkTalk : MonoBehaviour
                 }
                 return randArr1;
 
-                break;
+             //   break;
 
             case 20://고양이
 
@@ -178,7 +189,7 @@ public class ParkTalk : MonoBehaviour
                 }
                 return randArr2;
 
-                break;
+            //    break;
         }
 
         return null;
@@ -192,8 +203,6 @@ public class ParkTalk : MonoBehaviour
             nowArr = 0;
         }
         PlayerPrefs.SetInt("talkparkCK", 99);
-        //대화속도
-        speedF = PlayerPrefs.GetFloat("talkspeed", 0.05f);
         //Debug.Log(countTalkNum);
 
         //if (countTalkNum == 0)
@@ -212,6 +221,7 @@ public class ParkTalk : MonoBehaviour
         }
         else
         {
+            cleantalk();
             TalkSound();
             int a = PlayerPrefs.GetInt("likepoint", 0);
             a = a + 1;
@@ -220,30 +230,30 @@ public class ParkTalk : MonoBehaviour
 
             text_str = "" + data_talk[randArr[nowArr - 1]]["park"];
 
-            testText_cut = text_str.Split('/'); //끊기
-            cleantalk();
-            HeartPlus();
-            if (testText_cut[0] == "9")
+            Text_obj.text = "";
+            if (text_str.Contains("^"))
             { //질문이 있는경우
+                lineStr = text_str.ToString().Split('|'); // 0:질문 1:대답버튼 2:1번의 대답 3:대답버튼 4:3번의 대답   
                 StartCoroutine("questionTalkRun");
             }
             else
             {
-                StartCoroutine("talkRun");
+                StartCoroutine(talkRun());
             }
+
+            HeartPlus();
         }
     }
 
     public void talkTrash() //쓰레기대사
     {
-        if (PlayerPrefs.GetInt("talkparkCK", 0)== 99 || PlayerPrefs.GetInt("talkparkCK", 0) == 77)
+        cleantalk();
+        if (PlayerPrefs.GetInt("talkparkCK", 0) == 99 || PlayerPrefs.GetInt("talkparkCK", 0) == 77)
         {
             nowArr = 0;
         }
         PlayerPrefs.SetInt("talkparkCK", 88);
-        //대화속도
-        speedF = PlayerPrefs.GetFloat("talkspeed", 0.05f);
-        
+
         //소리
         //Audio_obj.GetComponent<SoundEvt>().talkSound();
 
@@ -251,14 +261,13 @@ public class ParkTalk : MonoBehaviour
 
         text_str = "" + data_etc[randArr1[nowArr - 1]]["trash"];
 
-        testText_cut = text_str.Split('/'); //끊기
-        cleantalk();
-        StartCoroutine("talkRun");
+        StartCoroutine(talkRun());
 
     }
 
     public void talkCat() //고양이대사
     {
+        cleantalk();
         if (PlayerPrefs.GetInt("talkparkCK", 0) == 99 || PlayerPrefs.GetInt("talkparkCK", 0) == 88)
         {
             nowArr = 0;
@@ -266,17 +275,11 @@ public class ParkTalk : MonoBehaviour
         PlayerPrefs.SetInt("talkparkCK", 77);
         ckk = 99;
 
-        //대화속도
-        speedF = PlayerPrefs.GetFloat("talkspeed", 0.05f);
-
         lineReload(2);
 
         text_str = "" + data_etc[randArr2[nowArr - 1]]["cat"];
 
-        testText_cut = text_str.Split('/'); //끊기
-        cleantalk();
-        StartCoroutine("talkRun");
-        
+        StartCoroutine(talkRun());
     }
 
     //고양이 먹이줌
@@ -345,18 +348,30 @@ public class ParkTalk : MonoBehaviour
         talkbtn.SetActive(true);
     }
 
-
-
     //대사 출력
     IEnumerator talkRun()
     {
-        talkballoon.SetActive(true);
+        //대화속도
+        speedF = PlayerPrefs.GetFloat("talkspeed", 0.05f);
         falseObject();
-        for (int i = 0; i < testText_cut.Length; i++)
+        cnt = 0;
+        while (cnt != text_str.Length)
         {
-            text_str = text_str.Insert(text_str.Length, testText_cut[i]);
-            Text_obj.text = text_str;
-            yield return new WaitForSeconds(speedF);
+            // 1. 현재 출력할 문자 확인
+            char currentChar = text_str[cnt];
+            Text_obj.text += currentChar.ToString();
+            cnt++;
+
+            // 2. 문자에 따라 대기 시간 다르게 설정
+            if (currentChar == '.' || currentChar == ',' || currentChar == '!' || currentChar == '?')
+            {
+                yield return new WaitForSeconds(speedF * 9f);
+            }
+            else
+            {
+                // 일반 글자일 때는 원래 속도대로 출력
+                yield return new WaitForSeconds(speedF);
+            }
         }
         trueObject();
     }
@@ -364,65 +379,91 @@ public class ParkTalk : MonoBehaviour
     //질문 출력
     IEnumerator questionTalkRun()
     {
-        talkballoon.SetActive(true);
+        //대화속도
+        speedF = PlayerPrefs.GetFloat("talkspeed", 0.05f);
         falseObject();
         closeTB.SetActive(false);
         quesBack.SetActive(true);
-        quesStr = " ";
-        for (int i = 0; i < testText_cut.Length; i++)
+        //   quesStr = " ";
+        btnTxt1.text = "";
+        btnTxt2.text = "";
+        cnt = 1;
+        while (cnt != lineStr[0].Length)
         {
-            quesStr = quesStr.Insert(quesStr.Length, testText_cut[i]);
-        }
+            // 1. 현재 출력할 문자 확인
+            char currentChar = lineStr[0][cnt];
+            Text_obj.text += currentChar.ToString();
+            cnt++;
 
-        for (int i = 1; i < testText_cut.Length; i++)
-        {
-            text_str = text_str.Insert(text_str.Length, testText_cut[i]);
-
-            if (text_str.Contains("8"))
+            // 2. 문자에 따라 대기 시간 다르게 설정
+            if (currentChar == '.' || currentChar == ',' || currentChar == '!' || currentChar == '?')
             {
-                string str, str2;
-                str = quesStr.Substring(quesStr.IndexOf("8") + 1, 12);
-                btnTxt1.text = str;
-                str2 = quesStr.Substring(quesStr.IndexOf("7") + 1, 12);
-                btnTxt2.text = str2;
+                // 쉼표나 마침표, 느낌표 등에서는 한 템포 더 길게 쉼 (예: 기본 속도의 3배)
+                yield return new WaitForSeconds(speedF * 9f);
             }
             else
             {
-                Text_obj.text = text_str;
+                // 일반 글자일 때는 원래 속도대로 출력
                 yield return new WaitForSeconds(speedF);
             }
         }
+
+        btnTxt1.text += lineStr[1].ToString();
+        btnTxt2.text += lineStr[3].ToString();
+
         quesBtmArea.SetActive(true);
     }
 
     //선택한 질문 출력
     IEnumerator choiceTextRun()
     {
-        talkballoon.SetActive(true);
+        //대화속도
+        speedF = PlayerPrefs.GetFloat("talkspeed", 0.05f);
         falseObject();
 
-        quesStr = " ";
-        for (int i = 0; i < testText_cut.Length; i++)
-        {
-            quesStr = quesStr.Insert(quesStr.Length, testText_cut[i]);
-        }
+        //  quesStr = " ";
+        cnt = 0;
 
         if (choiceNum == 1)
         {
-            for (int i = quesStr.IndexOf("+"); i < quesStr.IndexOf("-") - 1; i++)
+            while (cnt != lineStr[2].Length)
             {
-                text_str = text_str.Insert(text_str.Length, testText_cut[i]);
-                Text_obj.text = text_str;
-                yield return new WaitForSeconds(speedF);
+                // 1. 현재 출력할 문자 확인
+                char currentChar = lineStr[2][cnt];
+                Text_obj.text += currentChar.ToString();
+                cnt++;
+
+                // 2. 문자에 따라 대기 시간 다르게 설정
+                if (currentChar == '.' || currentChar == ',' || currentChar == '!' || currentChar == '?')
+                {
+                    yield return new WaitForSeconds(speedF * 9f);
+                }
+                else
+                {
+                    // 일반 글자일 때는 원래 속도대로 대기
+                    yield return new WaitForSeconds(speedF);
+                }
             }
         }
         else if (choiceNum == 2)
         {
-            for (int i = quesStr.IndexOf("*"); i < quesStr.IndexOf("=") - 1; i++)
+            while (cnt != lineStr[4].Length)
             {
-                text_str = text_str.Insert(text_str.Length, testText_cut[i]);
-                Text_obj.text = text_str;
-                yield return new WaitForSeconds(speedF);
+                // 1. 현재 출력할 문자 확인
+                char currentChar = lineStr[4][cnt];
+                Text_obj.text += currentChar.ToString();
+                cnt++;
+
+                // 2. 문자에 따라 대기 시간 다르게 설정
+                if (currentChar == '.' || currentChar == ',' || currentChar == '!' || currentChar == '?')
+                {
+                    yield return new WaitForSeconds(speedF * 9f);
+                }
+                else
+                {
+                    // 일반 글자일 때는 원래 속도대로 대기
+                    yield return new WaitForSeconds(speedF);
+                }
             }
         }
         trueObject();
