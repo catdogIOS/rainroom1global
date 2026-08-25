@@ -7585,8 +7585,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.4, y: -10.2}
-  m_SizeDelta: {x: 421.08215, y: 83.170456}
+  m_AnchoredPosition: {x: -8.98, y: -10.2}
+  m_SizeDelta: {x: 464.96, y: 83.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1411855429
 MonoBehaviour:
@@ -11222,7 +11222,6 @@ MonoBehaviour:
   trashB: {fileID: 1188113709}
   memoTrash: {fileID: 1895960064}
   trashButton: {fileID: 1170981656}
-  blackAd_obj: {fileID: 0}
 --- !u!114 &2145333741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11430,6 +11429,7 @@ MonoBehaviour:
   adPop_txt: {fileID: 1411855429}
   cutTime_btn: {fileID: 0}
   GM: {fileID: 2145333736}
+  adsBtn: {fileID: 339179173}
 --- !u!114 &2145333747
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class AdmobADStime : MonoBehaviour
 {
 
-    //����
+    //영상
     private RewardedAd rewardedAd;
     private string _rewardedAdUnitId;
 
@@ -18,6 +18,13 @@ public class AdmobADStime : MonoBehaviour
     public Text Toast_txt;
 
     public GameObject GM, timeWnd_obj, alarm_obj;
+
+    // 중요: 보상 지급 타이밍을 메인 스레드로 넘겨줄 플래그
+    private bool isFirstRewardPending = false;
+
+    private bool isReloadPending = false;
+
+    private int loadFailCount = 0;
 
     void Start()
     {
@@ -31,9 +38,29 @@ public class AdmobADStime : MonoBehaviour
         }
         else
         {
-            //Debug.Log("No Internet, skip init for now ���ͳ� ���� X");
+            //Debug.Log("No Internet, skip init for now 인터넷 연결 X");
         }
     }
+
+
+    // 중요: 메인 스레드에서 플래그를 감지하여 안전하게 보상 지급
+    private void Update()
+    {
+        if (isFirstRewardPending)
+        {
+            isFirstRewardPending = false;
+            giveMeReward();
+        }
+
+        if (isReloadPending)
+        {
+            isReloadPending = false;
+            float delay = Mathf.Min(1f * Mathf.Pow(2, loadFailCount), 30f); // 최대 30초
+            loadFailCount++;
+            Invoke("LoadRewardedAd", delay);
+        }
+    }
+
 
     public void LoadRewardedAd()
     {
@@ -56,46 +83,63 @@ public class AdmobADStime : MonoBehaviour
                 // if error is not null, the load request failed.
                 if (error != null || ad == null)
                 {
-                    //Debug.LogError("Rewarded ad failed to load an ad " + "with error : " + error);
+                    //  Debug.Log("광고 로드 실패 재시도");
+                    isReloadPending = true; // 여기서도 플래그를 세워주면 무한 동력 완성!
                     return;
                 }
 
-                //Debug.Log("Rewarded ad loaded with response : " + ad.GetResponseInfo());
-
+                loadFailCount = 0;
                 rewardedAd = ad;
+                RegisterEventHandlers(ad); //이벤트 등록
             });
 
+    }
+
+    private void RegisterEventHandlers(RewardedAd ad)
+    {
+        ad.OnAdFullScreenContentClosed += () =>
+        {
+            isReloadPending = true; // 플래그만 세움, 여기서 직접 호출 X
+        };
+        ad.OnAdFullScreenContentFailed += (AdError error) =>
+        {
+            isReloadPending = true;
+        };
     }
 
 
     public void showAdmobVideo()
     {
-        //Debug.Log("���º��� : " + rewardedAd);
+        //Debug.Log("상태보기 : " + rewardedAd);
 
         PlayerPrefs.SetInt("wait", 1);
         if (rewardedAd != null && rewardedAd.CanShowAd())
         {
             rewardedAd.Show((Reward reward) =>
             {
-                closeTimeADS();
-                Toast_obj.SetActive(true);
-                Toast_txt.text = "Time has been reduced by 2 hours.";
-                StartCoroutine("ToastImgFadeOut");
-                PlayerPrefs.SetInt("sleeptimeadsreward", 99);
-                alarm_obj.SetActive(false);
-
-                PlayerPrefs.SetInt("blad", 1);
-                PlayerPrefs.SetInt("adrunout", 0);
+                isFirstRewardPending = true;
             });
         }
         else
         {
-            //GM.GetComponent<UnityADSMilk>().adYes();
             PlayerPrefs.SetInt("wait", 2);
             MilkToast();
-            LoadRewardedAd();
+            // LoadRewardedAd();
         }
 
+    }
+
+    void giveMeReward()
+    {
+        closeTimeADS();
+        Toast_obj.SetActive(true);
+        Toast_txt.text = "Time has been reduced by 2 hours.";
+        StopCoroutine("ToastImgFadeOut");
+        StartCoroutine("ToastImgFadeOut");
+        PlayerPrefs.SetInt("sleeptimeadsreward", 99);
+        alarm_obj.SetActive(false);
+        PlayerPrefs.SetInt("adrunout", 0);
+        PlayerPrefs.Save();
     }
 
 
@@ -115,6 +159,7 @@ public class AdmobADStime : MonoBehaviour
         {
             Toast_obj.SetActive(true);
             Toast_txt.text = "Can't see it yet." + "\n" + "Try later.";
+            StopCoroutine("ToastImgFadeOut");
             StartCoroutine("ToastImgFadeOut");
         }
     }
@@ -123,24 +168,26 @@ public class AdmobADStime : MonoBehaviour
 
     IEnumerator ToastImgFadeOut()
     {
-        if (PlayerPrefs.GetInt("setmilkadc", 0) == 1)
-        {
-            PlayerPrefs.SetInt("setmilkadc", 0);
-        }
+        Image toastImage = Toast_obj.GetComponent<Image>();
 
-        color.a = Mathf.Lerp(0f, 1f, 1f);
-        Toast_obj.GetComponent<Image>().color = color;
+        color.a = 1f;
+        toastImage.color = color;
         Toast_obj.SetActive(true);
         yield return new WaitForSeconds(3.5f);
-        for (float i = 1f; i > 0f; i -= 0.05f)
+
+        float fadeDuration = 1f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeDuration)
         {
-            color.a = Mathf.Lerp(0f, 1f, i);
-            Toast_obj.GetComponent<Image>().color = color;
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            toastImage.color = color;
             yield return null;
         }
         Toast_obj.SetActive(false);
-
     }
+
 
 
 
@@ -148,5 +195,15 @@ public class AdmobADStime : MonoBehaviour
     {
         Toast_obj.SetActive(false);
     }
+
+    private void OnDestroy()
+    {
+        if (rewardedAd != null)
+        {
+            rewardedAd.Destroy();
+            rewardedAd = null;
+        }
+    }
+
 
 }

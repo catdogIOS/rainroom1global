@@ -7206,6 +7206,7 @@ MonoBehaviour:
   adPop_txt: {fileID: 439931070}
   cutTime_btn: {fileID: 1226738012}
   GM: {fileID: 300375158}
+  adsBtn: {fileID: 339179173}
 --- !u!114 &300375173
 MonoBehaviour:
   m_ObjectHideFlags: 0
