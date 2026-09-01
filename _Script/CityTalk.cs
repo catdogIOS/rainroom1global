@@ -332,7 +332,6 @@ public class CityTalk : MonoBehaviour
     }
 
     //대사 출력
-    //대사 출력
     IEnumerator talkRun()
     {
         //대화속도
