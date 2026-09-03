@@ -99,29 +99,23 @@ public class RoomTalk : MonoBehaviour
             loveLv = 5;
         }
 
-        lineReload();
-        
-        text_str = "" + data_talk[randArr[nowArr - 1]]["대화" + loveLv]; //문장넣기 0~9
-    }
-
-    void lineReload() // 대화 차례대로 보여주기 및 대화줄 초기화
-    {
         if (nowArr == 0) // 난수 돌리기
         {
-            GetRandomInt(allArr[0]); //테스트 0
+            GetRandomInt(allArr[loveLv]); //테스트 0 loveLv 지ㄴ짜
             nowArr++;
         }
-        else if (nowArr < allArr[0]) //대화 차례대로 보이기
+        else if (nowArr < allArr[loveLv]) //대화 차례대로 보이기
         {
             nowArr++;
         }
-        else if (nowArr >= allArr[0]) //대화 줄 초기화
+        else if (nowArr >= allArr[loveLv]) //대화 줄 초기화
         {
-            GetRandomInt(allArr[0]);
+            GetRandomInt(allArr[loveLv]);
             nowArr = 0;
             nowArr++;
         }
-
+        
+        text_str = "" + data_talk[randArr[nowArr - 1]]["대화" + loveLv]; //문장넣기 0~9
     }
 
     public int[] GetRandomInt(int length) //중복없는 난수생성기
