@@ -92,7 +92,7 @@ public class MainTime : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.GetInt("emergencyCODE3", 0) == 0)
+        if (PlayerPrefs.GetInt("emergencyCODE4", 0) == 0)
         {
             System.DateTime turnBackTime = System.DateTime.Now.AddHours(-12);
             PlayerPrefs.SetString("saveGudoc", turnBackTime.ToString());
@@ -124,7 +124,7 @@ public class MainTime : MonoBehaviour
             turnBackTime = System.DateTime.Now.AddHours(-1);
             PlayerPrefs.SetString("adtimespark", turnBackTime.ToString());
 
-            PlayerPrefs.SetInt("emergencyCODE3", 99);
+            PlayerPrefs.SetInt("emergencyCODE4", 99);
         }
 
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
